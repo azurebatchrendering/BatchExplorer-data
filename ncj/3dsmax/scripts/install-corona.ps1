@@ -1,7 +1,7 @@
 ﻿param (
     [string]$fairSaasUsername,
     [string]$fairSaasPassword,
-    [string]$source
+    [string]$source,
     [string]$destination
 )
 $source = $source.ToUpper()
