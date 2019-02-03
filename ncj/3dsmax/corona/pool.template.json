@@ -18,6 +18,29 @@
                 "description": "Password for Corona FairSaas"
             }
         },
+        "coronaAppPackageName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the AppPackage containing Corona binaries"
+            }
+        },
+        "coronaAppPackageVersion": {
+            "type": "string",
+            "metadata": {
+                "description": "Version of the AppPackage containing Corona binaries"
+            }
+        },
+        "maxVersion": {
+            "type": "string",
+            "defaultValue": "2019",
+            "metadata": {
+                "description": "The version of 3dsmax to install Corona binaries into"
+            },
+            "allowedValues":[
+                "2018",
+                "2019"
+            ]
+        },
         "dedicatedVmCount": {
             "type": "int",
             "defaultValue": 1,
@@ -31,16 +54,6 @@
             "metadata": {
                 "description": "The number of low priority nodes in the Azure Batch pool"
             }
-        },
-        "renderer": {
-            "type": "string",
-            "defaultValue": "corona",
-            "metadata": {
-                "description": "The renderer to use"
-            },
-            "allowedValues": [
-                "corona"
-            ]
         },
         "vmSize": {
             "type": "string",
@@ -104,19 +117,7 @@
                 "Standard_L32",
                 "Standard_M64s",
                 "Standard_M64ms",
-                "Standard_M128s",
-                "Standard_NC6",
-                "Standard_NC12",
-                "Standard_NC24",
-                "Standard_NC24r",
-                "Standard_NC6s_v2",
-                "Standard_NC12s_v2",
-                "Standard_NC24s_v2",
-                "Standard_NC24rs_v2",
-                "Standard_NC6s_v3",
-                "Standard_NC12s_v3",
-                "Standard_NC24s_v3",
-                "Standard_NC24rs_v3"
+                "Standard_M128s"
             ]
         }
     },
@@ -133,7 +134,7 @@
     },
     "pool": {
         "id": "[parameters('poolName')]",
-        "displayName": "3ds Max pool running: [parameters('poolName')]",
+        "displayName": "3ds Max with Corona pool running: [parameters('poolName')]",
         "vmSize": "[parameters('vmSize')]",
         "virtualMachineConfiguration": "[variables('osType')]",
         "targetDedicatedNodes": "[parameters('dedicatedVmCount')]",
@@ -143,13 +144,13 @@
         ],
          "applicationPackageReferences": [
             { 
-              "applicationId": "CORONA_3DS_MAX_PLUGIN", "version": "2019" 
+              "applicationId": "[parameters('coronaAppPackageName')]", "version": "[parameters('coronaAppPackageVersion')]" 
             }
        ],
         "enableAutoScale": false,
         "enableInterNodeCommunication": false,
         "startTask": {
-            "commandLine": "cmd /c powershell -ExecutionPolicy Unrestricted -File %AZ_BATCH_APP_PACKAGE_CORONA_3DS_MAX_PLUGIN#2019%\\install.ps1 [parameters('coronaFairSaasUsername')] [parameters('coronaFairSaasPassword')] & cmd.exe /c install-azure-nc-drivers.cmd [parameters('vmSize')]",
+            "commandLine": "cmd /c powershell -ExecutionPolicy Unrestricted -File install-corona.ps1 [parameters('coronaFairSaasUsername')] [parameters('coronaFairSaasPassword')] %[parameters('coronaAppPackageName')]#[parameters('coronaAppPackageVersion')]%\\[parameters('maxVersion')] C:\\Autodesk\\3DsMax\\[parameters('maxVersion')]",
             "waitForSuccess": true,
             "maxTaskRetryCount": 0,
             "userIdentity": {
@@ -160,8 +161,8 @@
             },
             "resourceFiles": [
                 {
-                    "blobSource": "https://raw.githubusercontent.com/Azure/BatchExplorer-data/master/ncj/3dsmax/scripts/install-azure-nc-drivers.cmd",
-                    "filePath": "install-azure-nc-drivers.cmd"
+                    "blobSource": "https://raw.githubusercontent.com/Azure/BatchExplorer-data/master/ncj/3dsmax/scripts/install-corona.ps1",
+                    "filePath": "install-corona.ps1"
                 }
             ]
         }
