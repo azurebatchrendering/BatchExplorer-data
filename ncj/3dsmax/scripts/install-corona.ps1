@@ -4,6 +4,7 @@
     [string]$source
     [string]$destination
 )
+$source = $source.ToUpper()
 $current_path = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 Start-Transcript -Path (Join-Path $current_path "corona-install.log")
 cd $current_path
