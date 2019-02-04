@@ -15,7 +15,7 @@
           "coronaFairSaasPassword": {
             "type": "string",
             "metadata": {
-                "description": "Password for Corona FairSaas"
+                "description": "Password for Corona FairSaaS"
             }
         },
         "coronaAppPackageName": {
