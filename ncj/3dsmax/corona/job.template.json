@@ -22,7 +22,7 @@
             "type": "string",
             "defaultValue": "2019",
             "metadata": {
-                "description": "The 3dsmax version to use"
+                "description": "The 3dsmax version for which Corona has been installed"
             },
             "allowedValues":[
                 "2018",
