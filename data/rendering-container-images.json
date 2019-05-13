@@ -82,7 +82,6 @@
     },
     {
         "containerImage": "azurebatchrendering/centos_maya2018update2_arnold2103:latest",
-        "os": "CentOS 75",
         "app": "maya",
         "appVersion": "2018-Update2",
         "renderer": "arnold",
