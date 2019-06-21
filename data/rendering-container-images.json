@@ -196,6 +196,24 @@
 			"renderer": "vray",
 			"rendererVersion": "36004",
 			"imageReferenceId": "centos-75-container"
+		},
+		{
+			"containerImage": "azurebatchrendering/maya_2017u5:release.25-git.3b3f003-blob.arwuhma-centos",
+			"os": "CentOS 75",
+			"app": "maya",
+			"appVersion": "2017-Update5",
+			"renderer": "mayasw",
+			"rendererVersion": "2017-Update5",
+			"imageReferenceId": "centos-75-container"
+		},
+		{
+			"containerImage": "azurebatchrendering/maya_2017u5_arnold2011:release.25-git.3b3f003-blob.m_s_qfn-centos",
+			"os": "CentOS 75",
+			"app": "maya",
+			"appVersion": "2017-Update5",
+			"renderer": "arnold",
+			"rendererVersion": "2.0.1.1",
+			"imageReferenceId": "centos-75-container"
 		}
 	]
 }
